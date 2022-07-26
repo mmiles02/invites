@@ -3,18 +3,26 @@ import VueRouter from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import AboutView from '@/views/AboutView'
 import LockView from '@/views/LockView'
+import OurStoryView from '@/views/OurStoryView'
+import PhotosView from '@/views/PhotosView'
+import WeddingPartyView from '@/views/WeddingPartyView'
+import QAView from '@/views/QAView'
+import TravelView from '@/views/TravelView'
+import RegistryView from '@/views/RegistryView'
+import RSVPView from '@/views/RSVPView'
+
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/lock',
     name: 'signin',
     component: LockView,
     meta: { title: 'Welcome' }
   },
   {
-    path: '/home',
+    path: '/',
     name: 'home',
     component: HomeView,
     meta: { title: 'Home' }
@@ -24,6 +32,48 @@ const routes = [
     name: 'about',
     component: AboutView,
     meta: { title: 'About' }
+  },
+  {
+    path: '/our-story',
+    name: 'our-story',
+    component: OurStoryView,
+    meta: { title: 'Our Story' }
+  },
+  {
+    path: '/photos',
+    name: 'photos',
+    component: PhotosView,
+    meta: { title: 'Photos' }
+  },
+  {
+    path: '/wedding-party',
+    name: 'wedding-party',
+    component: WeddingPartyView,
+    meta: { title: 'Wedding Party' }
+  },
+  {
+    path: '/q+a',
+    name: 'q+a',
+    component: QAView,
+    meta: { title: 'Q+A' }
+  },
+  {
+    path: '/travel',
+    name: 'travel',
+    component: TravelView,
+    meta: { title: 'Travel' }
+  },
+  {
+    path: '/registry',
+    name: 'registry',
+    component: RegistryView,
+    meta: { title: 'Registry' }
+  },
+  {
+    path: '/rsvp',
+    name: 'rsvp',
+    component: RSVPView,
+    meta: { title: 'RSVP' }
   }
 ]
 
