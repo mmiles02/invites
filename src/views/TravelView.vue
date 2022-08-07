@@ -3,7 +3,7 @@
     <v-col>
       <v-row>
         <v-col align="center">
-          <HeaderView></HeaderView>
+          <Header></Header>
         </v-col>
       </v-row>
       <v-row>
@@ -11,15 +11,24 @@
           Travel
         </v-col>
       </v-row>
+      <v-row>
+        <v-col align="center">
+          <Footer></Footer>
+        </v-col>
+      </v-row>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import HeaderView from "@/components/Header";
+import Header from '@/components/Header.vue'
+import Footer from '@/components/Footer.vue'
 export default {
   name: "TravelView",
-  components: {HeaderView}
+  components: {
+    Header,
+    Footer
+  }
 }
 </script>
 
