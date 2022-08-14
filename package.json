@@ -5,11 +5,14 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "deploy": "aws --region us-east-2 --profile wedding-deployer s3 sync ./dist s3://mitchellemiles.com --delete"
   },
   "dependencies": {
     "@mdi/font": "^7.0.96",
+    "aws-cli": "^0.0.2",
     "core-js": "^3.8.3",
+    "firebase": "^9.9.2",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",
     "vuetify": "^2.6.0"

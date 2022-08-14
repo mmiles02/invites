@@ -1,6 +1,67 @@
 <template>
   <v-row>
     <v-col>
+      <v-row v-if="isMobile">
+        <v-col align="left">
+          <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+        </v-col>
+      </v-row>
+      <v-navigation-drawer
+          v-model="drawer"
+          absolute
+          bottom
+          temporary
+        >
+        <v-list
+          nav
+          dense
+          >
+          <v-list-item-group
+            v-model="group"
+            >
+            <router-link to="/" :class="['mobile-tabs', currentPath('photos') ? 'mobile-tab-selected' : '']">
+              <v-list-item>
+                <v-list-item-title>Home</v-list-item-title>
+              </v-list-item>
+            </router-link>
+            <router-link to="/our-story" :class="['mobile-tabs', currentPath('photos') ? 'mobile-tab-selected' : '']">
+              <v-list-item>
+                <v-list-item-title>Our Story</v-list-item-title>
+              </v-list-item>
+            </router-link>
+            <router-link to="/photos" :class="['mobile-tabs', currentPath('photos') ? 'mobile-tab-selected' : '']">
+              <v-list-item>
+                <v-list-item-title>Photos</v-list-item-title>
+              </v-list-item>
+            </router-link>
+            <router-link to="/wedding-party" :class="['mobile-tabs', currentPath('wedding-party') ? 'mobile-tab-selected' : '']">
+              <v-list-item>
+                <v-list-item-title>Wedding Party</v-list-item-title>
+              </v-list-item>
+            </router-link>
+            <router-link to="/q+a" :class="['mobile-tabs', currentPath('q+a') ? 'mobile-tab-selected' : '']">
+              <v-list-item>
+                <v-list-item-title>Q + A</v-list-item-title>
+              </v-list-item>
+            </router-link>
+            <router-link to="/travel" :class="['mobile-tabs', currentPath('travel') ? 'mobile-tab-selected' : '']">
+              <v-list-item>
+                <v-list-item-title>Travel</v-list-item-title>
+              </v-list-item>
+            </router-link>
+            <router-link to="/registry" :class="['mobile-tabs', currentPath('registry') ? 'mobile-tab-selected' : '']">
+              <v-list-item>
+                <v-list-item-title>Registry</v-list-item-title>
+              </v-list-item>
+            </router-link>
+            <router-link to="/rsvp" :class="['mobile-tabs', currentPath('rsvp') ? 'mobile-tab-selected' : '']">
+              <v-list-item>
+                <v-list-item-title>RSVP</v-list-item-title>
+              </v-list-item>
+            </router-link>
+          </v-list-item-group>
+        </v-list>
+      </v-navigation-drawer>
       <v-spacer style="height: 100px"/>
       <v-row>
         <v-col align="center" class="ibarra txt-large">
@@ -18,29 +79,15 @@
         </v-col>
       </v-row>
       <v-spacer style="height: 50px"/>
-      <v-row style="margin-left: 220px;margin-right:220px;">
+      <v-row v-if="!isMobile" style="margin-left: 220px;margin-right:220px;">
         <v-col align="center" id="tab-holder">
           <router-link to="/" :class="['tabs', currentPath('home') ? 'tab-selected' : '']">Home</router-link>
-<!--        </v-col>-->
-<!--        <v-col align="center">-->
           <router-link to="/our-story" :class="['tabs', currentPath('our-story') ? 'tab-selected' : '']">Our Story</router-link>
-<!--        </v-col>-->
-<!--        <v-col align="center">-->
           <router-link to="/photos" :class="['tabs', currentPath('photos') ? 'tab-selected' : '']">Photos</router-link>
-<!--        </v-col>-->
-<!--        <v-col align="center">-->
           <router-link to="/wedding-party" :class="['tabs', currentPath('wedding-party') ? 'tab-selected' : '']">Wedding Party</router-link>
-<!--        </v-col>-->
-<!--        <v-col align="center">-->
           <router-link to="/q+a" :class="['tabs', currentPath('q+a') ? 'tab-selected' : '']">Q + A</router-link>
-<!--        </v-col>-->
-<!--        <v-col align="center">-->
           <router-link to="/travel" :class="['tabs', currentPath('travel') ? 'tab-selected' : '']">Travel</router-link>
-<!--        </v-col>-->
-<!--        <v-col align="center">-->
           <router-link to="/registry" :class="['tabs', currentPath('registry') ? 'tab-selected' : '']">Registry</router-link>
-<!--        </v-col>-->
-<!--        <v-col align="center">-->
           <router-link to="/rsvp" :class="['tabs', currentPath('rsvp') ? 'tab-selected' : '']">RSVP</router-link>
         </v-col>
       </v-row>
@@ -62,7 +109,24 @@ export default {
       qa_tab: false,
       travel_tab: false,
       registry_tab: false,
-      rsvp_tab: false
+      rsvp_tab: false,
+      drawer: false,
+      group: null
+    }
+  },
+
+  watch: {
+    group() {
+      this.drawer = false
+    }
+  },
+
+  computed: {
+    /**
+     * Returns whether a device is mobile
+     */
+    isMobile() {
+      return window.innerWidth <= 576
     }
   },
 
@@ -75,12 +139,11 @@ export default {
 
       return Math.ceil(difference / (1000 * 3600 * 24))
     },
-    log() {
-      console.log("hi")
-      console.log(this.$router)
-    },
     currentPath(route) {
       return this.$router.currentRoute.name === route
+    },
+    navigate(path) {
+      this.$router.push({name: path})
     },
     resetTabs() {
       this.home_tab = false
@@ -113,7 +176,7 @@ export default {
   margin-left: 30px;
   margin-right: 30px;
 }
-.tab-selected{
+.tab-selected {
   text-decoration: underline 3px dimgrey;
   text-underline-offset: .25em;
 }
@@ -124,5 +187,12 @@ export default {
 .underline {
   text-decoration: underline 3px;
   text-underline-offset: .25em;
+}
+.mobile-tabs {
+  text-decoration: none;
+  color: dimgray;
+}
+.mobile-tab-selected {
+  color: #9CAF88;
 }
 </style>

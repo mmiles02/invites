@@ -142,7 +142,7 @@
           <v-col>
             <div class="ibarra txt-small">
               <a href="https://twitter.com/search?q=%23gethitched&src=typed_query"
-                 style="text-decoration: none; color: dimgray" target="_blank">#GETHITCHED</a>
+                 style="text-decoration: none; color: dimgray" target="_blank">#MILEANDMILESTOGETHER</a>
             </div>
           </v-col>
         </v-row>
@@ -184,7 +184,7 @@ import Footer from '@/components/Footer.vue'
 }
 .home-img {
   width: 90%;
-  height: 700px;
+  height: auto;
   object-fit: cover;
   object-position: 43% 57%
 }

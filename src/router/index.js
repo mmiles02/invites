@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import AboutView from '@/views/AboutView'
-import LockView from '@/views/LockView'
 import OurStoryView from '@/views/OurStoryView'
 import PhotosView from '@/views/PhotosView'
 import WeddingPartyView from '@/views/WeddingPartyView'
@@ -10,17 +9,12 @@ import QAView from '@/views/QAView'
 import TravelView from '@/views/TravelView'
 import RegistryView from '@/views/RegistryView'
 import RSVPView from '@/views/RSVPView'
+import RSVPResults from '@/views/RSVPResults'
 
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/lock',
-    name: 'signin',
-    component: LockView,
-    meta: { title: 'Welcome' }
-  },
   {
     path: '/',
     name: 'home',
@@ -73,6 +67,13 @@ const routes = [
     path: '/rsvp',
     name: 'rsvp',
     component: RSVPView,
+    meta: { title: 'RSVP' }
+  },
+  {
+    path: '/rsvp',
+    name: 'rsvp-results',
+    component: RSVPResults,
+    props: true,
     meta: { title: 'RSVP' }
   }
 ]
