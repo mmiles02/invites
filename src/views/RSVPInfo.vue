@@ -32,7 +32,7 @@
                     <v-row>
                       <v-col>
                         <div class="ibarra txt-small bold">
-                          Attending? <i style="color: red">{{ form.attending_error[guest.id-1] }}</i>
+                          Attending? <i style="color: red">{{ attending_error[guest.id-1] }}</i>
                         </div>
                       </v-col>
                     </v-row>
@@ -55,7 +55,7 @@
                     <v-row style="margin-top: 50px;" v-if="form.attending[guest.id-1]==='yes'">
                       <v-col>
                         <div class="ibarra txt-small bold">
-                          Meal Selection <i style="color: red">{{ form.attending_error[guest.id-1] }}</i>
+                          Meal Selection <i style="color: red">{{ meal_selection_error[guest.id-1] }}</i>
                         </div>
                       </v-col>
                     </v-row>
@@ -85,7 +85,7 @@
                     <v-row v-if="form.attending[guest.id-1]==='yes'">
                       <v-col>
                         <v-textarea
-                            :v-model="'restrictions' + guest.id"
+                            v-model="form.dietary_restrictions[guest.id-1]"
                             counter
                             outlined
                             maxlength="200"
@@ -105,7 +105,7 @@
                     <v-row>
                       <v-col>
                         <v-textarea
-                            :v-model="'comments' + guest.id"
+                            v-model="form.comments[guest.id-1]"
                             counter
                             outlined
                             maxlength="200"
@@ -113,6 +113,13 @@
                             class="ibarra"
                         >
                         </v-textarea>
+                      </v-col>
+                    </v-row>
+                    <v-row v-if="error != ''" justify="center">
+                      <v-col align="center">
+                        <div class="ibarra txt-small bold">
+                          <i style="color: red">{{ error }}</i>
+                        </div>
                       </v-col>
                     </v-row>
                     <v-row style="margin-top: 50px;">
@@ -139,7 +146,7 @@
                         </v-btn>
                       </v-col>
                       <v-col align="right" v-if="tab === guests.length-1">
-                        <v-btn class="submit ibarra txt-white bold" color="#9CAF88" @click="submitForm">Submit</v-btn>
+                        <v-btn class="submit ibarra txt-white bold" color="#9CAF88" @click="showEmail">Submit</v-btn>
                       </v-col>
                     </v-row>
                   </v-col>
@@ -166,13 +173,41 @@
           </v-progress-circular>
         </v-col>
       </v-row>
+      <v-dialog
+          v-model="show_email"
+          width="500"
+      >
+        <v-card>
+          <v-card-title>
+            Enter email for reminders!
+          </v-card-title>
+          <v-row style="padding-right: 20px; padding-left: 20px;">
+            <v-col>
+              <v-text-field
+                label="Email"
+                v-model="email"
+                ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row justify="center">
+            <v-col align="center">
+              <div class="ibarra txt-small"><i style="color: red">{{ email_error }}</i></div>
+            </v-col>
+          </v-row>
+          <v-row justify="center" style="padding-bottom: 30px;">
+            <v-col align="center">
+              <v-btn class="submit ibarra txt-white bold" color="#9CAF88" @click="submitForm">Submit</v-btn>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-dialog>
     </v-col>
   </v-row>
 </template>
 
 <script>
 import { initializeApp } from 'firebase/app'
-import { ref, getDatabase, onValue } from 'firebase/database'
+import { ref, getDatabase, onValue, set } from 'firebase/database'
 
 // Import the functions you need from the SDKs you need
 //import firebase from "firebase";
@@ -204,11 +239,15 @@ export default {
         meal_selection: [],
         dietary_restrictions: [],
         comments: [],
-        attending_error: [],
-        meal_selection_error: []
       },
       submit: false,
-      submit_progress: 15
+      submit_progress: 0,
+      error: '',
+      attending_error: [],
+      meal_selection_error: [],
+      show_email: false,
+      email: '',
+      email_error: ''
     }
   },
 
@@ -238,8 +277,71 @@ export default {
         }
       })
     },
+    showEmail() {
+      let err = false
+      for (let y = 0; y < this.guests.length; y++) {
+        this.attending_error[y] = ''
+        this.meal_selection_error[y] = ''
+        if (this.form.attending[y] === undefined) {
+          this.attending_error[y] = '*Required'
+          err = true
+        } else if (this.form.attending[y] === 'no') {
+          this.form.meal_selection[y] = 'N/A'
+        }
+        if (this.form.meal_selection[y] === undefined) {
+          this.meal_selection_error[y] = '*Required'
+          err = true
+        }
+        if (this.form.dietary_restrictions[y] === undefined) {
+          this.form.dietary_restrictions[y] = ''
+        }
+        if (this.form.comments[y] === undefined) {
+          this.form.comments[y] = ''
+        }
+      }
+      if (err) {
+        this.error = 'There are errors that need to be corrected.'
+        let temp = this.attending_error
+        this.attending_error = []
+        this.attending_error = temp
+        temp = this.meal_selection_error
+        this.meal_selection_error = []
+        this.meal_selection_error = temp
+      } else {
+        this.error = ''
+        this.show_email = true
+      }
+    },
     submitForm() {
+      if (this.email === '') {
+        this.email_error = 'Email required.'
+        return
+      }
+      let re = /\S+@\S+\.\S+/
+      if (!re.test(this.email)) {
+        this.email_error = 'Must be an email.'
+        return
+      }
       this.submit = true
+      this.show_email = false
+      for (let x = 0; x < this.guests.length; x++) {
+        set(ref(db, 'guests/' + this.guest_id + '/extras/' + (x + 1)), {
+          name: this.guests[x].name,
+          attending: this.form.attending[x],
+          meal_selection: this.form.meal_selection[x],
+          dietary_restrictions: this.form.dietary_restrictions[x],
+          comments: this.form.comments[x]
+        })
+        setTimeout(() => {
+          this.submit_progress = ((x + 1) / this.guests.length) * 100
+          if (this.submit_progress === 100) {
+            setTimeout(() => {
+              this.$router.push({ name: 'home' })
+            }, 2000)
+          }
+        }, 500)
+      }
+      set(ref(db, 'guests/' + this.guest_id + '/email'), this.email)
     }
   }
 }

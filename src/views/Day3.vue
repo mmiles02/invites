@@ -104,16 +104,16 @@
                 <v-row style="padding: 10px;">
                   <v-col class="justify">
                     <div class="ibarra bold txt-med" style="padding-left: 15px; padding-right: 15px;">
-                      Day 2 Message
+                      Day 5 Message
                     </div>
                     <br>
                     <div class="ibarra txt-small" style="padding-left: 15px; padding-right: 15px;">
-                      What’s up! It’s day 4. It feels like day 10 already lol.
-                      But we’re officially at the 2 week mark! I’m beyond excited.
-                      I hope you’re having a terrific day and I hope you have a swell time at Kiera’s tonight.
-                      Hopefully you still have a ride lol.
-                      I think I might be going out tonight, and I’ll probably play some golf this weekend, but we’ll see what happens since it’s supposed to rain all weekend.
-                      Regardless, I’ll be vegging out watching some preseason football and working on our website.
+                      HANNAH! Its day 5. Stay strong today baby. I know it's going to get hard, but I know you are so strong.
+                      Be prepared for lots of hugs in T-13 days! Today I'm going to have an easy day.
+                      Coding our website and Steelers football should consume most of it. Prepare for many changes on the site!
+                      You are literally one day from moving in. It's crazy how time flies. I hope your travel is smooth and easy.
+                      Feel free to call me at any point if you get bored in the car. We can play some iMessage games too if you want.
+                      I love you Hannah.
                     </div>
                   </v-col>
                 </v-row>
@@ -124,17 +124,17 @@
                 <v-row style="padding: 10px;">
                   <v-col class="justify">
                     <div class="ibarra bold txt-med" style="padding-left: 15px; padding-right: 15px;">
-                      Day 4 Activity
+                      Day 5 Activity
                     </div>
                     <br>
                     <div class="ibarra txt-small" style="padding-left: 15px; padding-right: 15px;">
-                      Today is an account that I thought you might get a kick out of.
-                      Maybe you can find some inspiration if you haven’t settled on one specific style already.
+                      Today's fun activity is a stupid website that I found. I spent like 10 minutes on it.
+                      Maybe it's because I'm way too easily amused, but hopefully you can find some enjoyment lol.
                     </div>
                     <br>
                     <div class="ibarra txt-small" style="padding-left: 15px; padding-right: 15px;">
                       <a
-                          href="https://instagram.com/belleamourbridal?igshid=YmMyMTA2M2Y="
+                          href="https://thisissand.com/"
                           style="text-decoration: none" target="_blank"
                       >
                         Link</a>

@@ -29,8 +29,8 @@
           <v-col align="center" style="max-width: 700px;">
             <v-row v-for="guest in guests" v-bind:key="guest.id">
               <v-col>
-                <input type="radio" :value="guest.id" :id="guest.id" v-model="selected"/>
-                <label :for="guest.id" class="ibarra bold"> {{ guest.name }}</label>
+                <input class="radio" type="radio" :value="guest.id" :id="guest.id" v-model="selected"/>
+                <label :for="guest.id" class="ibarra bold" style="margin-left: 10px;">{{ guest.name }}</label>
               </v-col>
             </v-row>
           </v-col>
@@ -124,6 +124,9 @@ export default {
 </script>
 
 <style scoped>
+.radio {
+  transform: scale(1.5)
+}
 .ibarra {
   font-family: 'Ibarra Real Nova', serif;
   color: dimgray;
