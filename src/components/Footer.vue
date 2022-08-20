@@ -4,9 +4,9 @@
       <v-divider></v-divider>
       <v-row>
         <v-col>
-          <div class="ibarra txt-large">
-            H & M
-          </div>
+            <div @click="hannah" class="han ibarra txt-large">
+              H & M
+            </div>
         </v-col>
       </v-row>
       <hr style="width: 15%">
@@ -24,6 +24,12 @@
 <script>
 export default {
   name: "FooterView",
+
+  methods: {
+    hannah() {
+      this.$router.push({ name: 'day3' })
+    }
+  }
 }
 </script>
 
@@ -37,5 +43,8 @@ export default {
 }
 .txt-large {
   font-size: 56px;
+}
+.han:hover {
+  cursor: pointer;
 }
 </style>

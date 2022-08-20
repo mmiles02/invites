@@ -1,9 +1,11 @@
 <template>
-  <v-row>
+  <v-row style="margin-top: 30px;">
     <v-col>
       <v-row>
         <v-col align="center">
-          <Header></Header>
+          <div class="ibarra txt-large">
+            RSVP
+          </div>
         </v-col>
       </v-row>
       <form style="margin-top: 50px;">
@@ -14,43 +16,39 @@
             </div>
           </v-col>
         </v-row>
-        <v-row justify="center">
+        <v-row v-if="loading" justify="center">
+          <v-col align="center">
+            <v-progress-circular
+                :size="50"
+                color="#9CAF88"
+                indeterminate
+            ></v-progress-circular>
+          </v-col>
+        </v-row>
+        <v-row v-else justify="center">
           <v-col align="center" style="max-width: 700px;">
             <v-row v-for="guest in guests" v-bind:key="guest.id">
               <v-col>
-                <input type="radio" :value="guest.name" :id="guest.id" v-model="selected"/>
-                <label :for="guest.id"> {{ guest.name }}</label>
+                <input type="radio" :value="guest.id" :id="guest.id" v-model="selected"/>
+                <label :for="guest.id" class="ibarra bold"> {{ guest.name }}</label>
               </v-col>
             </v-row>
           </v-col>
         </v-row>
         <v-row>
           <v-col align="center">
-            <v-btn class="submit" color="#9CAF88" @click="submitGuestName">Submit</v-btn>
+            <v-btn class="submit ibarra txt-white bold" color="#9CAF88" @click="submitGuestName">Next</v-btn>
           </v-col>
         </v-row>
       </form>
-      <v-row>
-        <v-col align="center">
-          <Footer></Footer>
-        </v-col>
-      </v-row>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import Header from '@/components/Header.vue'
-import Footer from '@/components/Footer.vue'
-
-// import firebase from '@/firebaseInit.js'
 import { initializeApp } from 'firebase/app'
 import { ref, getDatabase, onValue } from 'firebase/database'
 
-// Import the functions you need from the SDKs you need
-//import firebase from "firebase";
-
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAxIlavv4dePmQzgrib5NgrZu0mYCOrWo4",
   authDomain: "wedding-website-4a01e.firebaseapp.com",
@@ -70,7 +68,8 @@ export default {
   data() {
     return {
       guests: [],
-      selected: ''
+      selected: '',
+      loading: true
     }
   },
 
@@ -82,24 +81,30 @@ export default {
     this.getGuests()
   },
 
-  components: {
-    Header,
-    Footer
-  },
-
   methods: {
     getGuests() {
-      for (var x = 1; x <= 1; x++) {
+      const max = 1
+      let count = 0
+      for (var x = 1; x <= max; x++) {
         const num = x
         const name = ref(db, 'guests/' + x + '/name')
         onValue(name, (snapshot) => {
           const data = snapshot.val()
           if (this.stringContains(data, this.search)) {
-            console.log(x)
             this.guests.push({
               id: num,
               name: data
             })
+            count += 1
+            this.loading = false
+          }
+          else {
+            count += 1
+          }
+          if (count === max) {
+            if (this.guests.length == 0) {
+              this.$router.push({ name: 'rsvp', params: { error: "I'm sorry, but you are not showing up on the guest list. If you think there is an error, please notify the bride or the groom." } })
+            }
           }
         })
       }
@@ -107,6 +112,12 @@ export default {
 
     stringContains(str, subStr) {
       return str.toUpperCase().includes(subStr.toUpperCase())
+    },
+
+    submitGuestName() {
+      if (this.selected !== '') {
+        this.$router.push({ name: 'rsvp-info', params: { guest_id: this.selected } })
+      }
     }
   }
 }
@@ -145,5 +156,8 @@ export default {
 .justify {
   text-align: justify;
   text-justify: inter-word;
+}
+.txt-white {
+  color: white;
 }
 </style>

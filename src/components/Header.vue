@@ -39,7 +39,7 @@
                 <v-list-item-title>Wedding Party</v-list-item-title>
               </v-list-item>
             </router-link>
-            <router-link to="/q+a" :class="['mobile-tabs', currentPath('q+a') ? 'mobile-tab-selected' : '']">
+            <router-link to="/qa" :class="['mobile-tabs', currentPath('qa') ? 'mobile-tab-selected' : '']">
               <v-list-item>
                 <v-list-item-title>Q + A</v-list-item-title>
               </v-list-item>
@@ -71,7 +71,7 @@
       <v-row>
         <v-col align="center" class="ibarra txt-small">
           <div>
-            OCTOBER 8, 2023 • PITTSBURGH, PA
+            OCTOBER 7, 2023 • PITTSBURGH, PA
           </div>
           <div>
             {{ getDaysToGo() }} DAYS TO GO!
@@ -85,7 +85,7 @@
           <router-link to="/our-story" :class="['tabs', currentPath('our-story') ? 'tab-selected' : '']">Our Story</router-link>
           <router-link to="/photos" :class="['tabs', currentPath('photos') ? 'tab-selected' : '']">Photos</router-link>
           <router-link to="/wedding-party" :class="['tabs', currentPath('wedding-party') ? 'tab-selected' : '']">Wedding Party</router-link>
-          <router-link to="/q+a" :class="['tabs', currentPath('q+a') ? 'tab-selected' : '']">Q + A</router-link>
+          <router-link to="/qa" :class="['tabs', currentPath('qa') ? 'tab-selected' : '']">Q + A</router-link>
           <router-link to="/travel" :class="['tabs', currentPath('travel') ? 'tab-selected' : '']">Travel</router-link>
           <router-link to="/registry" :class="['tabs', currentPath('registry') ? 'tab-selected' : '']">Registry</router-link>
           <router-link to="/rsvp" :class="['tabs', currentPath('rsvp') ? 'tab-selected' : '']">RSVP</router-link>
